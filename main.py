@@ -3,8 +3,8 @@ from connector import ProxmoxConnector
 
 def main():
     proxmox = ProxmoxConnector()
-    version = proxmox.get("/version")
-    print(version)
+    nodes = proxmox.get("/nodes")
+    print(nodes)
 
 
 if __name__ == "__main__":

@@ -23,16 +23,9 @@ class ProxmoxConnector:
         response.raise_for_status()
         return response.json()
 
-    def get_vms(self, nodes):
+    def get_resources(self, nodes, resource_type):
         results = []
         for node_data in nodes["data"]:
             node_name = node_data["node"]
-            results.extend(self.get(f"/nodes/{node_name}/qemu")["data"])
-        return {"data": results}
-
-    def get_lxcs(self, nodes):
-        results = []
-        for node_data in nodes["data"]:
-            node_name = node_data["node"]
-            results.extend(self.get(f"/nodes/{node_name}/lxc")["data"])
+            results.extend(self.get(f"/nodes/{node_name}/{resource_type}")["data"])
         return {"data": results}

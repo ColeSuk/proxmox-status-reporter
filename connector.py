@@ -22,3 +22,10 @@ class ProxmoxConnector:
         response = requests.get(url, headers=headers, verify=self.verify_ssl)
         response.raise_for_status()
         return response.json()
+
+    def get_vms(self, nodes):
+        results = []
+        for node_data in nodes["data"]:
+            node_name = node_data["node"]
+            results.extend(self.get(f"/nodes/{node_name}/qemu")["data"])
+        return {"data": results}

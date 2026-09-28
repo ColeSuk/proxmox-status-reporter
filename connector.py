@@ -29,3 +29,10 @@ class ProxmoxConnector:
             node_name = node_data["node"]
             results.extend(self.get(f"/nodes/{node_name}/qemu")["data"])
         return {"data": results}
+
+    def get_lxcs(self, nodes):
+        results = []
+        for node_data in nodes["data"]:
+            node_name = node_data["node"]
+            results.extend(self.get(f"/nodes/{node_name}/lxc")["data"])
+        return {"data": results}

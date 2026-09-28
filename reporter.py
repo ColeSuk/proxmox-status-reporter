@@ -30,3 +30,21 @@ def format_vm_data(vms):
         formatted_string = f"{name}: ID: {vmid}, Status: {status}, CPU {cpu_percentage:.2f}%, RAM {mem_percentage:.2f}% ({mem_GB_conversion:.2f}GB / {maxmem_GB_conversion:.2f}GB)"
         results.append(formatted_string)
     return results
+
+
+def format_lxc_data(lxcs):
+    results = []
+    for lxc_data in lxcs["data"]:
+        name = lxc_data["name"]
+        vmid = lxc_data["vmid"]
+        status = lxc_data["status"]
+        cpu = lxc_data["cpu"]
+        mem = lxc_data["mem"]
+        maxmem = lxc_data["maxmem"]
+        cpu_percentage = cpu * 100
+        mem_percentage = mem / maxmem * 100
+        mem_GB_conversion = mem / 1024**3
+        maxmem_GB_conversion = maxmem / 1024**3
+        formatted_string = f"{name}: ID: {vmid}, Status: {status}, CPU {cpu_percentage:.2f}%, RAM {mem_percentage:.2f}% ({mem_GB_conversion:.2f}GB / {maxmem_GB_conversion:.2f}GB)"
+        results.append(formatted_string)
+    return results

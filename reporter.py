@@ -1,3 +1,11 @@
+def format_uptime(uptime):
+    days, remainder = divmod(uptime, 86400)
+    hours, remainder = divmod(remainder, 3600)
+    minutes, remainder = divmod(remainder, 60)
+    formatted_string = f"{days}d {hours}h {minutes}m"
+    return formatted_string
+
+
 def format_node_data(nodes):
     results = []
     for node_data in nodes["data"]:
@@ -14,7 +22,8 @@ def format_node_data(nodes):
         disk_percentage = disk / maxdisk * 100
         disk_GB_conversion = disk / 1024**3
         maxdisk_GB_conversion = maxdisk / 1024**3
-        formatted_string = f"{node}: CPU {cpu_percentage:.2f}%, RAM {mem_percentage:.2f}% ({mem_GB_conversion:.2f}GB / {maxmem_GB_conversion:.2f}GB), Disk {disk_percentage:.2f}% ({disk_GB_conversion:.2f}GB / {maxdisk_GB_conversion:.2f}GB)"
+        uptime = format_uptime(node_data["uptime"])
+        formatted_string = f"{node}: Uptime {uptime}, CPU {cpu_percentage:.2f}%, RAM {mem_percentage:.2f}% ({mem_GB_conversion:.2f}GB / {maxmem_GB_conversion:.2f}GB), Disk {disk_percentage:.2f}% ({disk_GB_conversion:.2f}GB / {maxdisk_GB_conversion:.2f}GB)"
         results.append(formatted_string)
     return results
 
@@ -37,6 +46,7 @@ def format_resource_data(resources):
         disk_percentage = disk / maxdisk * 100
         disk_GB_conversion = disk / 1024**3
         maxdisk_GB_conversion = maxdisk / 1024**3
-        formatted_string = f"{name}: ID: {vmid}, Status: {status}, CPU {cpu_percentage:.2f}%, RAM {mem_percentage:.2f}% ({mem_GB_conversion:.2f}GB / {maxmem_GB_conversion:.2f}GB), Disk {disk_percentage:.2f}% ({disk_GB_conversion:.2f}GB / {maxdisk_GB_conversion:.2f}GB)"
+        uptime = format_uptime(data["uptime"])
+        formatted_string = f"{name}: ID: {vmid}, Status: {status}, Uptime {uptime}, CPU {cpu_percentage:.2f}%, RAM {mem_percentage:.2f}% ({mem_GB_conversion:.2f}GB / {maxmem_GB_conversion:.2f}GB), Disk {disk_percentage:.2f}% ({disk_GB_conversion:.2f}GB / {maxdisk_GB_conversion:.2f}GB)"
         results.append(formatted_string)
     return results
